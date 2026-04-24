@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RapidTech.mrq – Solusi Teknologi Terpercaya</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --cyan: #00d4ff;
+      --cyan-dim: #00b8d9;
+      --dark: #0a0e1a;
+      --dark2: #111827;
+      --card: #141c2e;
+      --border: rgba(0,212,255,0.15);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--dark);
+      color: #e2e8f0;
+      overflow-x: hidden;
+    }
+    h1,h2,h3,h4,h5 { font-family: 'Syne', sans-serif; }
+
+    /* Grid bg */
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    /* Glow blob */
+    .glow-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+
+    /* Cyan accent line */
+    .accent-line {
+      display: inline-block;
+      width: 40px; height: 3px;
+      background: var(--cyan);
+      border-radius: 2px;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    /* Card hover */
+    .service-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0,212,255,0.4);
+      box-shadow: 0 20px 60px rgba(0,212,255,0.1);
+    }
+    .service-card:hover::before { opacity: 1; }
+
+    /* Icon box */
+    .icon-box {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+    }
+
+    /* Cyan text */
+    .text-cyan { color: var(--cyan); }
+
+    /* Badge */
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: rgba(0,212,255,0.1);
+      border: 1px solid rgba(0,212,255,0.25);
+      color: var(--cyan);
+      text-transform: uppercase;
+    }
+
+    /* Price tag */
+    .price-tag {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--cyan);
+    }
+
+    /* CTA Button */
+    .btn-primary {
+      background: var(--cyan);
+      color: #0a0e1a;
+      font-weight: 700;
+      font-family: 'Syne', sans-serif;
+      padding: 14px 32px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      display: inline-block;
+      text-decoration: none;
+      font-size: 15px;
+    }
+    .btn-primary:hover {
+      background: #22e5ff;
+      transform: scale(1.03);
+      box-shadow: 0 8px 30px rgba(0,212,255,0.35);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--cyan);
+      border: 1.5px solid var(--cyan);
+      font-weight: 600;
+      font-family: 'Syne', sans-serif;
+      padding: 13px 30px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+      display: inline-block;
+      text-decoration: none;
+      font-size: 15px;
+    }
+    .btn-outline:hover {
+      background: rgba(0,212,255,0.1);
+      transform: scale(1.03);
+    }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10,14,26,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 68px;
+      display: flex; align-items: center;
+    }
+
+    /* Step line */
+    .step-line {
+      position: absolute;
+      top: 50%; left: calc(50% + 40px);
+      width: calc(100% - 80px);
+      height: 1px;
+      background: linear-gradient(90deg, var(--cyan), transparent);
+      opacity: 0.3;
+    }
+
+    /* Stat card */
+    .stat-card {
+      background: rgba(0,212,255,0.05);
+      border: 1px solid rgba(0,212,255,0.15);
+      border-radius: 14px;
+      padding: 24px 28px;
+      text-align: center;
+    }
+
+    /* Section divider */
+    .divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 0;
+    }
+
+    /* WA Floating */
+    .wa-float {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      z-index: 200;
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      background: #25d366;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+    }
+    .wa-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 10px 36px rgba(37,211,102,0.55);
+    }
+
+    /* Mobile nav toggle */
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: flex; }
+
+    /* Scroll fade-in */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* testimonial card */
+    .testi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+    }
+    .stars { color: #f59e0b; font-size: 15px; }
+
+    @media (max-width: 640px) {
+      .step-line { display: none; }
+    }
+  </style>
+</head>
+<body class="grid-bg">
+
+<nav>
+  <div class="max-w-6xl mx-auto w-full flex items-center justify-between">
+    <a href="#hero" class="flex items-center gap-2 text-white" style="font-family:'Syne',sans-serif; font-size:20px; font-weight:800; text-decoration:none;">
+      <span style="color:var(--cyan)">⚡</span>
+      <span>Rapid<span style="color:var(--cyan)">Tech</span><span style="color:#64748b">.mrq</span></span>
+    </a>
+
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#services" class="text-sm font-medium text-slate-400 hover:text-cyan-300 transition-colors">Layanan</a>
+      <a href="#pricing" class="text-sm font-medium text-slate-400 hover:text-cyan-300 transition-colors">Harga</a>
+      <a href="#process" class="text-sm font-medium text-slate-400 hover:text-cyan-300 transition-colors">Proses</a>
+      <a href="#testimonials" class="text-sm font-medium text-slate-400 hover:text-cyan-300 transition-colors">Ulasan</a>
+      <a href="#contact" class="btn-primary" style="padding:10px 22px; font-size:13px;">Hubungi Kami</a>
+    </div>
+
+    <button id="hamburger" class="md:hidden text-slate-400 hover:text-white" onclick="toggleMenu()">
+      <svg id="icon-open" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+      <svg id="icon-close" class="hidden" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="md:hidden fixed top-[68px] left-0 right-0 flex-col gap-0 z-50"
+    style="background:rgba(10,14,26,0.97); border-bottom:1px solid var(--border); backdrop-filter:blur(16px);">
+    <a href="#services" onclick="closeMenu()" class="px-6 py-4 text-slate-300 hover:text-cyan-400 border-b border-[rgba(0,212,255,0.08)] text-sm font-medium block">Layanan</a>
+    <a href="#pricing" onclick="closeMenu()" class="px-6 py-4 text-slate-300 hover:text-cyan-400 border-b border-[rgba(0,212,255,0.08)] text-sm font-medium block">Harga</a>
+    <a href="#process" onclick="closeMenu()" class="px-6 py-4 text-slate-300 hover:text-cyan-400 border-b border-[rgba(0,212,255,0.08)] text-sm font-medium block">Proses</a>
+    <a href="#testimonials" onclick="closeMenu()" class="px-6 py-4 text-slate-300 hover:text-cyan-400 border-b border-[rgba(0,212,255,0.08)] text-sm font-medium block">Ulasan</a>
+    <div class="p-4"><a href="#contact" onclick="closeMenu()" class="btn-primary w-full text-center block">Hubungi Kami</a></div>
+  </div>
+</nav>
+
+<section id="hero" class="relative min-h-screen flex items-center justify-center pt-24 pb-16 px-4 md:px-6 overflow-hidden">
+  <div class="glow-blob hidden md:block" style="width:500px;height:500px;background:rgba(0,212,255,0.06);top:-100px;left:-150px;"></div>
+  <div class="glow-blob hidden md:block" style="width:400px;height:400px;background:rgba(0,180,255,0.06);bottom:-80px;right:-100px;"></div>
+
+  <div class="max-w-4xl mx-auto text-center relative z-10 w-full">
+    <div class="fade-up mb-5">
+      <span class="badge">⚡ Teknisi Profesional Merauke</span>
+    </div>
+
+    <h1 class="fade-up text-4xl sm:text-5xl md:text-7xl font-extrabold leading-tight mb-6" style="font-family:'Syne',sans-serif;">
+      Solusi <span class="text-cyan">Laptop</span><br/>
+      Cepat & Terpercaya
+    </h1>
+
+    <p class="fade-up text-slate-400 text-base md:text-xl max-w-xl mx-auto mb-10 leading-relaxed px-2">
+      Install ulang, lisensi Windows 11 Pro, cleaning, hingga repasta thermal — semua dikerjakan cepat, rapi, dan bergaransi.
+    </p>
+
+    <div class="fade-up flex flex-col sm:flex-row gap-4 justify-center items-center w-full px-4 sm:px-0">
+      <a href="#services" class="btn-primary w-full sm:w-auto text-center">Lihat Layanan Kami</a>
+      <a href="#contact" class="btn-outline w-full sm:w-auto text-center">Konsultasi Gratis</a>
+    </div>
+
+    <div class="fade-up grid grid-cols-1 sm:grid-cols-3 gap-4 mt-16 max-w-lg mx-auto w-full px-4 sm:px-0">
+      <div class="stat-card">
+        <div class="text-3xl font-bold text-cyan" style="font-family:'Syne',sans-serif;">200+</div>
+        <div class="text-slate-400 text-xs mt-1">Pelanggan</div>
+      </div>
+      <div class="stat-card">
+        <div class="text-3xl font-bold text-cyan" style="font-family:'Syne',sans-serif;">100%</div>
+        <div class="text-slate-400 text-xs mt-1">Bergaransi</div>
+      </div>
+      <div class="stat-card">
+        <div class="text-3xl font-bold text-cyan" style="font-family:'Syne',sans-serif;">&lt;1hr</div>
+        <div class="text-slate-400 text-xs mt-1">Pengerjaan</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hidden sm:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 opacity-40">
+    <div class="text-xs text-slate-400">Scroll</div>
+    <div style="width:1px;height:32px;background:linear-gradient(to bottom,var(--cyan),transparent);"></div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<section id="services" class="py-16 md:py-24 px-4 md:px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="fade-up text-center mb-12 md:mb-16">
+      <span class="badge mb-4">Layanan Kami</span>
+      <h2 class="text-3xl md:text-5xl font-bold mt-3 mb-4">Apa yang Kami Kerjakan?</h2>
+      <p class="text-slate-400 max-w-md mx-auto text-sm md:text-base">Semua kebutuhan perawatan dan pemulihan laptop kamu, kami tangani dengan standar profesional.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+
+      <div class="service-card fade-up p-6 md:p-8">
+        <div class="icon-box mb-6">🪟</div>
+        <div class="flex items-start justify-between mb-3">
+          <h3 class="text-lg md:text-xl font-bold">Windows 11 Pro Lisensi</h3>
+          <span class="badge text-[10px] md:text-xs">Original</span>
+        </div>
+        <p class="text-slate-400 text-sm leading-relaxed mb-5">
+          Aktifkan Windows 11 Pro kamu dengan lisensi resmi. Nikmati fitur lengkap tanpa watermark, update otomatis, dan keamanan terjamin dari Microsoft.
+        </p>
+        <ul class="text-sm text-slate-400 space-y-2 mb-6">
+          <li class="flex items-center gap-2"><span class="text-cyan text-xs">✦</span> Lisensi genuine / original</li>
+          <li class="flex items-center gap-2"><span class="text-cyan text-xs">✦</span> Aktivasi permanent (tidak kedaluwarsa)</li>
+          <li class="flex items-center gap-2"><span class="text-cyan text-xs">✦</span> Support BitLocker, Remote Desktop, Hyper-V</li>
+          <li class="flex items-center gap-2"><span class="text-cyan text-xs">✦</span> Garansi aktivasi seumur hidup</li>
+        </ul>
+        <div class="price-tag">Rp 50.000<span class="text-slate-500 text-sm font-normal">/key</span></div>
+      </div>
+
+      <div class="service-card fade-up p-6 md:p-8">
+        <div class="icon-box mb-6">💻</div>
+        <div class="flex items-start justify-between mb-3">
+          <h3 class="text-lg md:text-xl font-bold">Install Ulang Laptop</h3>
+          <span class="badge text-[10px] md:text-xs">Populer</span>
+        </div>
+        <p class="text-slate-400 text-sm leading-relaxed mb-5">
+          Laptop lemot, virus, atau corrupt? Kami install ulang OS kamu dari awal — bersih, cepat, dan siap digunakan kembali. Support semua merek laptop.
+        </p>
+        <ul class="text-sm text-slate-400 space-y-2 mb-6">
+          <li class="flex items-center gap-2"><span class="text-cyan text-xs">✦</span> Windows 10 / 11 (Home & Pro)</li>
+          <li class="flex items-center gap-2"><span class="text-cyan text-xs">✦</span> Driver lengkap & update terbaru</li>
+          <li class="flex items-center gap-2"><span class="text-cyan text-xs">✦</span> Backup data sebelum proses (opsional)</li>
+          <li class="flex items-center gap-2"><span class="text-cyan text-xs">✦</span> Selesai 30–60 menit</li>
+        </ul>
+        <div class="price-tag">Rp 100.000<span class="text-slate-500 text-sm font-normal">/unit</span></div>
+      </div>
+
+      <div class="service-card fade-up p-6 md:p-8">
+        <div class="icon-box mb-6">🧹</div>
+        <div class="flex items-start justify-between mb-3">
+          <h3 class="text-lg md:text-xl font-bold">Cleaning Laptop</h3>
+          <span class="badge text-[10px] md:text-xs">Maintenance</span>
+        </div>
+        <p class="text-slate-400 text-sm leading-relaxed mb-5">
+          Debu menumpuk di kipas bikin laptop overheat dan lemot. Kami bersihkan bagian dalam laptop kamu secara menyeluruh — aman, rapi, dan profesional.
+        </p>
+        <ul class="text-sm text-slate-400 space-y-2 mb-6">
+          <li class="flex items-center gap-2"><span class="text-cyan text-xs">✦</span> Bersihkan kipas, heatsink & port</li>
+          <li class="flex items-center gap-2"><span class="text-cyan text-xs">✦</span> Gunakan blower & kuas anti-static</li>
+          <li class="flex items-center gap-2"><span class="text-cyan text-xs">✦</span> Laptop lebih adem & berumur panjang</li>
+          <li class="flex items-center gap-2"><span class="text-cyan text-xs">✦</span> Direkomendasikan setiap 6 bulan</li>
+        </ul>
+        <div class="price-tag">Rp 150.000<span class="text-slate-500 text-sm font-normal">/unit</span></div>
+      </div>
+
+      <div class="service-card fade-up p-6 md:p-8" style="border-color:rgba(0,212,255,0.35);">
+        <div style="position:absolute;top:16px;right:16px;">
+          <span class="badge" style="background:rgba(0,212,255,0.15);color:var(--cyan);">⭐ Best Value</span>
+        </div>
+        <div class="icon-box mb-6">🔧</div>
+        <div class="flex items-start justify-between mb-3">
+          <h3 class="text-lg md:text-xl font-bold">Cleaning + Repasta</h3>
+        </div>
+        <p class="text-slate-400 text-sm leading-relaxed mb-5">
+          Paket lengkap perawatan termal. Selain cleaning menyeluruh, kami juga ganti thermal paste pada prosesor & GPU agar suhu turun drastis dan performa optimal.
+        </p>
+        <ul class="text-sm text-slate-400 space-y-2 mb-6">
+          <li class="flex items-center gap-2"><span class="text-cyan text-xs">✦</span> Semua manfaat cleaning standar</li>
+          <li class="flex items-center gap-2"><span class="text-cyan text-xs">✦</span> Ganti thermal paste CPU & GPU</li>
+          <li class="flex items-center gap-2"><span class="text-cyan text-xs">✦</span> Thermal paste premium (Noctua / MX-4)</li>
+          <li class="flex items-center gap-2"><span class="text-cyan text-xs">✦</span> Suhu turun 10–20°C setelah servis</li>
+        </ul>
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="price-tag">Rp 250.000<span class="text-slate-500 text-sm font-normal">/unit</span></div>
+          <span style="font-size:12px;color:#f59e0b;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);padding:3px 10px;border-radius:20px;">Hemat Rp 50rb</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<section id="pricing" class="py-16 md:py-24 px-4 md:px-6">
+  <div class="max-w-4xl mx-auto">
+    <div class="fade-up text-center mb-10 md:mb-14">
+      <span class="badge mb-4">Transparansi Harga</span>
+      <h2 class="text-3xl md:text-5xl font-bold mt-3 mb-4">Daftar Harga Layanan</h2>
+      <p class="text-slate-400 max-w-sm mx-auto text-sm md:text-base">Harga terjangkau, kualitas tidak kami kompromikan.</p>
+    </div>
+
+    <div class="fade-up overflow-x-auto rounded-2xl w-full" style="border:1px solid var(--border);">
+      <table class="w-full text-sm min-w-[500px]">
+        <thead>
+          <tr style="background:rgba(0,212,255,0.07);border-bottom:1px solid var(--border);">
+            <th class="text-left px-6 py-4 font-semibold text-slate-300" style="font-family:'Syne',sans-serif;">Layanan</th>
+            <th class="text-center px-4 py-4 font-semibold text-slate-300" style="font-family:'Syne',sans-serif;">Durasi</th>
+            <th class="text-right px-6 py-4 font-semibold text-slate-300" style="font-family:'Syne',sans-serif;">Harga</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border);background:rgba(0,212,255,0.02);">
+            <td class="px-6 py-5">
+              <div class="font-medium text-white">🪟 Windows 11 Pro Lisensi</div>
+              <div class="text-slate-500 text-xs mt-1">Lisensi genuine, permanent</div>
+            </td>
+            <td class="text-center px-4 py-5 text-slate-400">5–10 mnt</td>
+            <td class="text-right px-6 py-5 font-bold text-cyan whitespace-nowrap" style="font-family:'Syne',sans-serif;">Rp 50.000</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);background:var(--card);">
+            <td class="px-6 py-5">
+              <div class="font-medium text-white">💻 Install Ulang Laptop</div>
+              <div class="text-slate-500 text-xs mt-1">Windows 10/11, driver lengkap</div>
+            </td>
+            <td class="text-center px-4 py-5 text-slate-400">30–60 mnt</td>
+            <td class="text-right px-6 py-5 font-bold text-cyan whitespace-nowrap" style="font-family:'Syne',sans-serif;">Rp 100.000</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);background:var(--card);">
+            <td class="px-6 py-5">
+              <div class="font-medium text-white">🧹 Cleaning Laptop</div>
+              <div class="text-slate-500 text-xs mt-1">Bersih menyeluruh, tanpa repasta</div>
+            </td>
+            <td class="text-center px-4 py-5 text-slate-400">30–45 mnt</td>
+            <td class="text-right px-6 py-5 font-bold text-cyan whitespace-nowrap" style="font-family:'Syne',sans-serif;">Rp 150.000</td>
+          </tr>
+          <tr style="background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.2);">
+            <td class="px-6 py-5">
+              <div class="font-medium text-white flex flex-wrap items-center gap-2">
+                🔧 Cleaning + Repasta
+                <span style="font-size:10px;background:rgba(245,158,11,0.15);color:#f59e0b;border:1px solid rgba(245,158,11,0.25);padding:2px 8px;border-radius:20px;">Best Value</span>
+              </div>
+              <div class="text-slate-500 text-xs mt-1">Cleaning + ganti thermal paste premium</div>
+            </td>
+            <td class="text-center px-4 py-5 text-slate-400">45–75 mnt</td>
+            <td class="text-right px-6 py-5 font-bold text-cyan whitespace-nowrap" style="font-family:'Syne',sans-serif;">Rp 250.000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="text-center text-slate-500 text-sm mt-5">* Harga dapat berubah sewaktu-waktu. Hubungi kami untuk info terkini.</p>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<section id="process" class="py-16 md:py-24 px-4 md:px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="fade-up text-center mb-12 md:mb-16">
+      <span class="badge mb-4">Cara Kerja Kami</span>
+      <h2 class="text-3xl md:text-5xl font-bold mt-3 mb-4">Proses yang Mudah</h2>
+      <p class="text-slate-400 max-w-sm mx-auto text-sm md:text-base">4 langkah mudah dari konsultasi hingga laptop kamu siap dipakai lagi.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-6">
+      <div class="fade-up text-center relative">
+        <div class="mx-auto mb-4 flex items-center justify-center" style="width:64px;height:64px;border-radius:50%;background:rgba(0,212,255,0.1);border:1.5px solid var(--cyan);font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--cyan);">1</div>
+        <div class="text-2xl mb-3">📞</div>
+        <h4 class="font-bold mb-2">Konsultasi</h4>
+        <p class="text-slate-500 text-xs md:text-sm leading-relaxed">Ceritakan masalah laptop kamu via WhatsApp atau langsung datang.</p>
+      </div>
+      <div class="fade-up text-center" style="transition-delay:0.1s;">
+        <div class="mx-auto mb-4 flex items-center justify-center" style="width:64px;height:64px;border-radius:50%;background:rgba(0,212,255,0.1);border:1.5px solid var(--cyan);font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--cyan);">2</div>
+        <div class="text-2xl mb-3">🔍</div>
+        <h4 class="font-bold mb-2">Diagnosa</h4>
+        <p class="text-slate-500 text-xs md:text-sm leading-relaxed">Kami cek kondisi laptop dan berikan estimasi biaya sebelum mulai.</p>
+      </div>
+      <div class="fade-up text-center" style="transition-delay:0.2s;">
+        <div class="mx-auto mb-4 flex items-center justify-center" style="width:64px;height:64px;border-radius:50%;background:rgba(0,212,255,0.1);border:1.5px solid var(--cyan);font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--cyan);">3</div>
+        <div class="text-2xl mb-3">⚙️</div>
+        <h4 class="font-bold mb-2">Pengerjaan</h4>
+        <p class="text-slate-500 text-xs md:text-sm leading-relaxed">Proses dikerjakan cepat, rapi, dan di depan kamu jika diinginkan.</p>
+      </div>
+      <div class="fade-up text-center" style="transition-delay:0.3s;">
+        <div class="mx-auto mb-4 flex items-center justify-center" style="width:64px;height:64px;border-radius:50%;background:rgba(0,212,255,0.1);border:1.5px solid var(--cyan);font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--cyan);">4</div>
+        <div class="text-2xl mb-3">✅</div>
+        <h4 class="font-bold mb-2">Selesai</h4>
+        <p class="text-slate-500 text-xs md:text-sm leading-relaxed">Laptop siap diambil! Dilengkapi garansi pengerjaan dari kami.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<section id="testimonials" class="py-16 md:py-24 px-4 md:px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="fade-up text-center mb-10 md:mb-14">
+      <span class="badge mb-4">Ulasan Pelanggan</span>
+      <h2 class="text-3xl md:text-5xl font-bold mt-3 mb-4">Kata Mereka 💬</h2>
+      <p class="text-slate-400 max-w-sm mx-auto text-sm md:text-base">Kepercayaan pelanggan adalah amanah terbesar kami.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="testi-card fade-up">
+        <div class="stars mb-3">★★★★★</div>
+        <p class="text-slate-300 text-sm leading-relaxed mb-5">"Install ulang laptop saya beres dalam 45 menit! Semua driver sudah terpasang, langsung bisa dipake kerja. Mantap!"</p>
+        <div class="flex items-center gap-3">
+          <div style="width:38px;height:38px;border-radius:50%;background:rgba(0,212,255,0.15);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--cyan);font-family:'Syne',sans-serif;">RA</div>
+          <div>
+            <div class="font-semibold text-sm">Rudi A.</div>
+            <div class="text-slate-500 text-xs">Pegawai Kantor</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card fade-up" style="transition-delay:0.1s;">
+        <div class="stars mb-3">★★★★★</div>
+        <p class="text-slate-300 text-sm leading-relaxed mb-5">"Laptop saya panas banget, udah kayak setrika. Habis cleaning dan repasta, suhunya turun jauh. Rekomen banget!"</p>
+        <div class="flex items-center gap-3">
+          <div style="width:38px;height:38px;border-radius:50%;background:rgba(0,212,255,0.15);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--cyan);font-family:'Syne',sans-serif;">SN</div>
+          <div>
+            <div class="font-semibold text-sm">Sinta N.</div>
+            <div class="text-slate-500 text-xs">Mahasiswi</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card fade-up" style="transition-delay:0.2s;">
+        <div class="stars mb-3">★★★★★</div>
+        <p class="text-slate-300 text-sm leading-relaxed mb-5">"Beli lisensi Windows 11 Pro di sini, murah, asli, dan langsung aktif permanen. Harganya beda jauh sama toko sebelah."</p>
+        <div class="flex items-center gap-3">
+          <div style="width:38px;height:38px;border-radius:50%;background:rgba(0,212,255,0.15);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--cyan);font-family:'Syne',sans-serif;">BH</div>
+          <div>
+            <div class="font-semibold text-sm">Bagas H.</div>
+            <div class="text-slate-500 text-xs">Freelancer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<section class="py-16 md:py-24 px-4 md:px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="fade-up text-center mb-10 md:mb-14">
+      <span class="badge mb-4">Keunggulan Kami</span>
+      <h2 class="text-3xl md:text-5xl font-bold mt-3 mb-4">Kenapa Pilih Kami?</h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div class="fade-up flex gap-4 items-start p-6 rounded-2xl" style="background:var(--card);border:1px solid var(--border);">
+        <div class="text-2xl mt-1">⚡</div>
+        <div><h4 class="font-bold mb-1">Pengerjaan Cepat</h4><p class="text-slate-400 text-sm">Rata-rata selesai dalam 1 jam. Tidak perlu menunggu berhari-hari.</p></div>
+      </div>
+      <div class="fade-up flex gap-4 items-start p-6 rounded-2xl" style="background:var(--card);border:1px solid var(--border);transition-delay:0.05s;">
+        <div class="text-2xl mt-1">🛡️</div>
+        <div><h4 class="font-bold mb-1">Bergaransi</h4><p class="text-slate-400 text-sm">Setiap layanan dilengkapi garansi pengerjaan. Ada masalah? Kembali ke kami.</p></div>
+      </div>
+      <div class="fade-up flex gap-4 items-start p-6 rounded-2xl" style="background:var(--card);border:1px solid var(--border);transition-delay:0.1s;">
+        <div class="text-2xl mt-1">💰</div>
+        <div><h4 class="font-bold mb-1">Harga Transparan</h4><p class="text-slate-400 text-sm">Tidak ada biaya tersembunyi. Estimasi diberikan sebelum proses dimulai.</p></div>
+      </div>
+      <div class="fade-up flex gap-4 items-start p-6 rounded-2xl" style="background:var(--card);border:1px solid var(--border);transition-delay:0.15s;">
+        <div class="text-2xl mt-1">🎓</div>
+        <div><h4 class="font-bold mb-1">Teknisi Berpengalaman</h4><p class="text-slate-400 text-sm">Dikerjakan oleh teknisi yang sudah berpengalaman di bidangnya.</p></div>
+      </div>
+      <div class="fade-up flex gap-4 items-start p-6 rounded-2xl" style="background:var(--card);border:1px solid var(--border);transition-delay:0.2s;">
+        <div class="text-2xl mt-1">📦</div>
+        <div><h4 class="font-bold mb-1">Spare Part Berkualitas</h4><p class="text-slate-400 text-sm">Thermal paste premium, alat anti-static, dan komponen bermutu tinggi.</p></div>
+      </div>
+      <div class="fade-up flex gap-4 items-start p-6 rounded-2xl" style="background:var(--card);border:1px solid var(--border);transition-delay:0.25s;">
+        <div class="text-2xl mt-1">📍</div>
+        <div><h4 class="font-bold mb-1">Lokasi Strategis</h4><p class="text-slate-400 text-sm">Berlokasi di Merauke, mudah dijangkau dari berbagai penjuru kota.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<section id="contact" class="py-16 md:py-24 px-4 md:px-6">
+  <div class="max-w-3xl mx-auto text-center">
+    <div class="fade-up">
+      <span class="badge mb-4">Hubungi Kami</span>
+      <h2 class="text-3xl md:text-5xl font-bold mt-3 mb-4">Siap Membantu Kamu!</h2>
+      <p class="text-slate-400 max-w-md mx-auto mb-10 md:mb-12 text-sm md:text-base">Ada pertanyaan atau ingin langsung pesan layanan? Hubungi kami sekarang — respon cepat!</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-10 md:mb-12">
+      <a href="https://wa.me/6282199547682" target="_blank" class="fade-up service-card p-6 flex flex-col items-center gap-3 text-center text-decoration-none" style="text-decoration:none;">
+        <div class="text-3xl">📱</div>
+        <div>
+          <div class="font-bold mb-1">WhatsApp</div>
+          <div class="text-slate-400 text-sm">+62 821-9954-7682</div>
+        </div>
+        <span class="badge text-xs" style="margin-top:auto;">Chat Sekarang</span>
+      </a>
+      <div class="fade-up service-card p-6 flex flex-col items-center gap-3 text-center" style="transition-delay:0.1s;">
+        <div class="text-3xl">📍</div>
+        <div>
+          <div class="font-bold mb-1">Lokasi</div>
+          <div class="text-slate-400 text-sm">Merauke, Papua Selatan</div>
+        </div>
+        <span class="badge text-xs" style="margin-top:auto;">Kunjungi Kami</span>
+      </div>
+      <div class="fade-up service-card p-6 flex flex-col items-center gap-3 text-center" style="transition-delay:0.2s;">
+        <div class="text-3xl">🕐</div>
+        <div>
+          <div class="font-bold mb-1">Jam Operasional</div>
+          <div class="text-slate-400 text-sm">Senin–Sabtu<br/>09.00 – 20.00 WIT</div>
+        </div>
+        <span class="badge text-xs" style="margin-top:auto;">Open Sekarang</span>
+      </div>
+    </div>
+
+    <div class="fade-up">
+      <a href="https://wa.me/6282199547682?text=Halo%20RapidTech,%20saya%20ingin%20tanya%20layanan%20laptop" target="_blank" class="btn-primary text-base md:text-lg px-8 py-4 w-full sm:w-auto">
+        💬 Chat via WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer style="background:var(--dark2);border-top:1px solid var(--border);" class="py-8 px-4 md:px-6">
+  <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+    <div>
+      <div class="text-xl font-bold mb-1" style="font-family:'Syne',sans-serif;">
+        <span style="color:var(--cyan)">⚡</span> Rapid<span style="color:var(--cyan)">Tech</span><span style="color:#64748b">.mrq</span>
+      </div>
+      <div class="text-slate-500 text-sm">Solusi Teknologi Laptop Terpercaya di Merauke</div>
+    </div>
+    <div class="flex flex-wrap justify-center md:justify-end gap-4 md:gap-6 text-sm text-slate-400">
+      <a href="#services" class="hover:text-cyan-400 transition-colors">Layanan</a>
+      <a href="#pricing" class="hover:text-cyan-400 transition-colors">Harga</a>
+      <a href="#process" class="hover:text-cyan-400 transition-colors">Proses</a>
+      <a href="#contact" class="hover:text-cyan-400 transition-colors">Kontak</a>
+    </div>
+    <div class="text-slate-600 text-xs text-center md:text-right">
+      © 2025 RapidTech.mrq<br/>Merauke, Papua Selatan
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/6282199547682?text=Halo%20RapidTech!" target="_blank" class="wa-float" title="Chat WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="white">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.074.531 4.023 1.463 5.728L0 24l6.437-1.437C8.08 23.49 10.004 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.898 0-3.663-.516-5.175-1.411l-.371-.22-3.823.853.868-3.741-.241-.385C2.525 15.54 2 13.83 2 12 2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+  </svg>
+</a>
+
+<script>
+  // Mobile menu toggle
+  function toggleMenu() {
+    const menu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('icon-open');
+    const iconClose = document.getElementById('icon-close');
+    const isOpen = menu.classList.contains('open');
+    if (isOpen) {
+      menu.classList.remove('open');
+      iconOpen.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+    } else {
+      menu.classList.add('open');
+      iconOpen.classList.add('hidden');
+      iconClose.classList.remove('hidden');
+    }
+  }
+  function closeMenu() {
+    const menu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('icon-open');
+    const iconClose = document.getElementById('icon-close');
+    menu.classList.remove('open');
+    iconOpen.classList.remove('hidden');
+    iconClose.classList.add('hidden');
+  }
+
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Animate hero elements on load
+  window.addEventListener('load', () => {
+    document.querySelectorAll('#hero .fade-up').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), 100 + i * 150);
+    });
+  });
+</script>
+</body>
+</html>
